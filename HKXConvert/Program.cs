@@ -21,6 +21,8 @@ namespace HKXConvert
             if (property.PropertyName != null && property.PropertyName.StartsWith("m_"))
                 property.PropertyName = property.PropertyName.Substring(2);
             if (property.PropertyName == "Signature") property.ShouldSerialize = instance => false;
+            if (property.PropertyName == "IsIdentity") property.ShouldSerialize = instance => false;
+            if (property.PropertyName == "Translation") property.ShouldSerialize = instance => false;
 
             return property;
         }
@@ -30,7 +32,7 @@ namespace HKXConvert
     {
         private static readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {
-            // Formatting = Formatting.Indented,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             TypeNameHandling = TypeNameHandling.Auto,
             ContractResolver = new ShouldSerializeContractResolver(),
             Converters = new List<JsonConverter>
